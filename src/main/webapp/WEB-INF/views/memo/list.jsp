@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page import="java.util.*, com.memo.model.*"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -46,7 +47,10 @@
 				<c:forEach var="memo" items="${memoArr}">
 					<tr>
 						<td>${memo.idx}</td>
-						<td>${memo.msg}<span class="mdate">[${memo.wdate}]</span>
+						<td>${memo.msg}
+						<span class="float-right">
+						<fmt:formatDate value="${memo.wdate}" pattern="yyyy-MM-dd"/>
+						</span>
 						</td>
 						<td>${memo.name}</td>
 						<td><a href="memoEdit?idx=${memo.idx}">수정</a>| <a

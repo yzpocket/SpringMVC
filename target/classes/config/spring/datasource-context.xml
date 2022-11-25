@@ -25,6 +25,18 @@
 		<property name="password" value="${Global.Password}"/>
 	</bean>
 	
+	<!-- [3-2] HikariCp 커넥션풀 빈 등 -->
+	<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">
+		<property name="driverClassName" value="${Global.DriverClassName}"/>
+		<property name="jdbcUrl" value="${Global.Url}"/>
+		<property name="username" value="${Global.Username}"/>
+		<property name="password" value="${Global.Password}"/>
+	</bean>
+	
+	<bean id="dataSource-hikari" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<constructor-arg ref="hikariConfig"/>
+	</bean>
+	
 	<!-- MySQL 쓸땐 이것 주석 활성 -->
 <!--<bean id="dataSource-mysql" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
 		<property name="driverClassName" value="${Global.DriverClassName}"/>
@@ -33,6 +45,7 @@
 		<property name="password" value="${Global.Password}"/>
 	</bean> -->
 	
+	<!-- 아래는 MyBatis세팅 -->
 	<!-- [4] SqlSessionFactoryBean 빈 등록 -->
 	<bean id="sqlSessionFactoryBean" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
