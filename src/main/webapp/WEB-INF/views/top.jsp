@@ -48,6 +48,12 @@
         <a class="nav-link" href="${myctx}/admin/prodForm">Add Products</a>
       </li>    
       <li class="nav-item">
+        <a class="nav-link" href="${myctx}/ajaxView">Spring Ajax Practice</a>
+      </li>    
+      <li class="nav-item">
+        <a class="nav-link" href="${myctx}/fileForm">File Upload Practice</a>
+      </li>    
+      <li class="nav-item">
         <a class="nav-link" href="${myctx}/admin/prodList">Products List</a>
       </li>    
       <li class="nav-item">
