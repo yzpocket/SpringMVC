@@ -19,6 +19,7 @@
 		.done(function(res){
 			//alert(JSON.stringify(res));
 			let str='<select name="downCg_code" id="downCg_code">';
+				str+='<option value="">::하위 카테고리::</option>';
 				$.each(res, function(i, item){
 					str+='<option value="'+item.downCg_code+'">'+item.downCg_name+'</option>';
 				})
@@ -29,6 +30,51 @@
 			alert('err');
 		})
 	}
+	
+	function check(){ //유효성체크 
+		if(!$('#upCg_code').val()){
+			alert('상위 카테고리를 선택하세요.');
+			$('#upCg_code').focus();
+			return false;
+		}
+		if(!$('#downCg_code').val()){
+			alert('하위 카테고리를 선택하세요.');
+			$('#downCg_code').focus();
+			return false;
+		}
+		if(!$('#pname').val()){
+			alert('상품명을 입력하세요.');
+			$('#pname').focus();
+			return false;
+		}
+		
+		let $price=$('#price').val();
+		let pattern=/^[0-9]+$/
+		
+		if(!pattern.test($('#pqty').val())){
+			alert('수량은 숫자로 입력해야 해요.');
+			$('#pqty').select();
+			return false;
+		}
+		if(!pattern.test($price)){
+			alert('정가는 숫자로 입력해야 해요.');
+			$('#price').focus();
+			return false;
+		}
+		if(!pattern.test($('#saleprice').val())){
+			alert('판매가는 숫자로 입력해야 해요.');
+			$('#saleprice').focus();
+			return false;
+		}
+		if(!pattern.test($('#point').val())){
+			alert('포인트는 숫자로 입력해야 해요.');
+			$('#point').focus();
+			return false;
+		
+		}
+		return true;
+	}
+	
 </script>
 
    <div class="py-5">
@@ -37,7 +83,9 @@
         <div class="col-md-12">
            <h1 class="text-center">상품 등록[Admin Page]</h1>
            
-           <form name="prodF" id="prodF" action="prodInsert" method="POST" enctype="multipart/form-data">
+           <form name="prodF" id="prodF" action="prodInsert" method="POST"
+            enctype="multipart/form-data" onsubmit="return check()">
+           
             <!-- 파일업로드시: enctype="multipart/form-data"-->
             <table class="table table-condensed table-bordered mt-4">
                <thead>
