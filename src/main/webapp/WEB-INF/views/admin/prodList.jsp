@@ -33,7 +33,7 @@
 					<c:forEach var="prod" items="${prodArr}">
 						<tr>
 							<td>${prod.pnum}</td>
-							<td>${prod.upCg_code}>${prod.downCg_code}</td>
+							<td>${prod.upCg_name}>${prod.downCg_name}</td>
 							<td>${prod.pname}</td>
 							<td width="15%">
 								<a href="a" target="_blank">
