@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap 4 Website Example</title>
+  <title>MyShop Webpage</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -24,7 +24,7 @@
 <c:set var="myctx" value="${pageContext.request.contextPath}"/>
 
 <div class="jumbotron text-center" style="margin-bottom:0">
-  <h1>My First Bootstrap 4 Page</h1>
+  <h1>MyShop Web Page</h1>
   <p>Resize this responsive page to see the effect!</p> 
 </div>
 
@@ -41,9 +41,19 @@
       <li class="nav-item">
         <a class="nav-link" href="${myctx}/admin/userList">Users</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="${myctx}/login">Login</a>
-      </li>
+      <c:if test="${loginUser eq null}">
+	      <li class="nav-item"><!-- FOOT.jsp에서 MODAL 임포트함. -->
+	        <a class="nav-link" href="#loginModal" data-toggle="modal">Login</a>
+	      </li>
+      </c:if>
+      <c:if test="${loginUser ne null}">
+      	  <li class="nav-item bg-primary">
+	        <a class="nav-link text-white" href="#">${loginUser.userid }님 로그인중..</a>
+	      </li>
+	      <li class="nav-item">
+	        <a class="nav-link" href="${myctx}/logout">Logout</a>
+	      </li>
+      </c:if>
       <li class="nav-item">
         <a class="nav-link" href="${myctx}/ajaxView">[Spring Ajax Practice]</a>
       </li>    

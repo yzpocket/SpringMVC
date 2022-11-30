@@ -36,7 +36,7 @@
 							<td>${prod.upCg_name}>${prod.downCg_name}</td>
 							<td>${prod.pname}</td>
 							<td width="15%">
-								<a href="a" target="_blank">
+								<a href="../prodDetail?pnum=${cvo.pnum_fk}" target="_blank">
 									<img src="../resources/product_images/${prod.pimage1}"
 									style="width:90%;margin:auto;" class="img-fluid">
 								</a>

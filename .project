@@ -44,11 +44,4 @@
 		<nature>org.eclipse.wst.common.modulecore.ModuleCoreNature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>src/main/resources/config/SQL/SpringMVC Category_Product_tableCreate.sql</name>
-			<type>1</type>
-			<locationURI>PARENT-3-PROJECT_LOC/myjava/SQL/SpringMVC%20Category_Product_tableCreate.sql</locationURI>
-		</link>
-	</linkedResources>
 </projectDescription>

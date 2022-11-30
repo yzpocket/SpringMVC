@@ -15,6 +15,8 @@
 <div class="text-center footer">
 	<p>Footer</p>
 </div>
-
+<!-- loginModal.jsp include -->
+<%@ include file="/WEB-INF/views/login/loginModal.jsp" %>
+<!-- ---------------------------------- -->
 </body>
 </html>

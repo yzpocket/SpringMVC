@@ -31,7 +31,7 @@ public class AdminController {
 	@Inject
 	private AdminService adminService;
 
-	@GetMapping("prodForm")
+	@GetMapping("/prodForm")
 	public String productForm(Model m) {
 		List<CategoryVO> upCgList = adminService.getUpcategory();
 		log.info("upCgList======" + upCgList);
@@ -63,7 +63,7 @@ public class AdminController {
 		
 		File dir=new File(upDir); //클린하면 없어지기도해서 생성 시키려고함.
 		if(!dir.exists()) {
-			dir.mkdir(); //업로드할 디렉토리 생성
+			dir.mkdirs(); //업로드할 디렉토리 생성
 		}
 		//2. 업로드 처리
 		if(pimage!=null) {
