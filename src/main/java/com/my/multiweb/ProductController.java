@@ -3,6 +3,7 @@ package com.my.multiweb;
 import java.util.List;
 
 import javax.inject.Inject;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,10 +37,11 @@ public class ProductController {
 	// 뷰페이지는 show/prodDetail 반환. 
 	// ShopServiceImpl 상품 번호로 정보 가져오기.
 	@GetMapping("/prodDetail")
-	public String productByPnum(Model m, @RequestParam(defaultValue="0") int pnum) {
+	public String productByPnum(Model m, @RequestParam(defaultValue="0") int pnum, HttpSession ses) {
 		if(pnum==0) {
 			return "redirect:index";
 		}
+		ses.setAttribute("pnum", pnum); //리뷰용 추가 
 		ProductVO vo=this.shopService.selectByPnum(pnum);
 		
 		m.addAttribute("prod", vo);

@@ -4,12 +4,15 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
-<c:import url="/top"/>
-
+<!-- Ajax 요청 처리----------------------------- -->
+<script src="js/reviewAjax.js">
+	
+</script>
+<!-- ------------------------------------------- -->
 <form method="post" enctype="multipart/form-data" name="rf" id="rf">
 	<!-- hidden data------------------------------------ -->
-		<input type="hidden" name="pnum_fk" id="pnum_fk" value="${prod.pnum}">
-		<input type="hidden" name="userid" id="userid" value="${loginUser.userid}">
+		<input type="text" name="pnum_fk" id="pnum_fk" value="${prod.pnum}">
+		<input type="text" name="userid" id="userid" value="${loginUser.userid}">
 	<!-- ---------------------------------------------- -->
 	<table class="table">
 	<tr>
@@ -20,7 +23,7 @@
 	<tr>
 		<th>평가점수</th>
 		<td>
-		<input type="hidden" name="score" id="score">
+		<!-- <input type="hidden" name="score" id="score"> -->
 		 <label for="score1"><input type="radio" name="score" id="score1" value="1">1점</label>
 		<label for="score2"><input type="radio" name="score" id="score2" value="2">2점</label>
 		<label for="score3"><input type="radio" name="score"  id="score3" value="3">3점</label>
@@ -42,15 +45,17 @@
 	<tr>
 		<th>이미지업로드</th>
 		<td colspan="2">
-		<input type="file" name="filename" id="filename"
+		<input type="file" name="mfilename" id="mfilename"
 		 accept="image/*" class="form-control">
 		</td>
 		<td>
-		<a type="button" class="btn btn-success"
-				onclick="send()">글쓰기</a>
+		<!-- 파일 업로드가 없는 일반적인 폼 데이터를 전송 할 때 => send() 함수를 통해 ajax요청  -->
+		<!-- <a type="button" class="btn btn-success"
+				onclick="send()">글쓰기</a> -->
+		<!-- default submit button -->
+			<button class="btn btn-outline-success">글쓰기</button>
 		</td>
 	</tr>
 </table>
 </form>
 
-<c:import url="/foot"/>

@@ -6,7 +6,7 @@
 <div class="modal" id="loginModal">
 	<div class="modal-dialog">
 		<div class="modal-content">
-			<form action="loginF" method='post'
+			<form name="loginF" method='post'
 				action='${pageContext.request.contextPath}/login'>
 				<!-- Modal Header -->
 				<div class="modal-header">

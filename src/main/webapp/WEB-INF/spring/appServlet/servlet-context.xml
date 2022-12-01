@@ -47,4 +47,7 @@
 		<beans:constructor-arg value="/Users/inyongkim/Documents/myspring/Upload"/>
 	</beans:bean>
 	<!-- String upDir=new String("/Users/inyongkim/Documents/myspring/Upload"); -->
+	
+	<view-controller path="/reviewForm" view-name="review/reviewForm"/>
+	
 </beans:beans>

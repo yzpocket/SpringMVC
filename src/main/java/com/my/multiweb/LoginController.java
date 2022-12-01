@@ -22,7 +22,7 @@ public class LoginController {
 	private UserService userService;
 	
 	
-	@PostMapping
+	@PostMapping("/login")
 	public String loginProcess(HttpSession session, @ModelAttribute("user") UserVO user) 
 	throws NotUserException{
 		log.info("user==="+user);
