@@ -70,10 +70,10 @@
         <a class="nav-link" href="${myctx}/user/cartList">My Cart</a>
       </li>    
       <li class="nav-item">
-        <a class="nav-link" href="${myctx}/user/board/write">Write</a>
+        <a class="nav-link" href="${myctx}/board/write">Board Write</a>
       </li>    
       <li class="nav-item">
-        <a class="nav-link" href="${myctx}/user/board/list">Review List</a>
+        <a class="nav-link" href="${myctx}/board/list">Review List</a>
       </li>    
     </ul>
   </div>  
