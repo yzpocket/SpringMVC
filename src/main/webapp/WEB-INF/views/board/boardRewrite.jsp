@@ -5,16 +5,17 @@
 <script src="https://cdn.ckeditor.com/4.17.2/standard/ckeditor.js"></script>
 <script>
 $(function(){
+	
 	CKEDITOR.replace('content');
 	
 	$('#bf').submit(function(){
 		if($('#subject').val()==''){
-			alert('제목을 입력하세요')
+			alert('제목을 입력하세요');
 			$('#subject').focus();
 			return false;
 		}
 		if($('#name').val()==''){
-			alert('작성자를 입력하세요')
+			alert('글쓴이를 입력하세요');
 			$('#name').focus();
 			return false;
 		}
@@ -23,24 +24,25 @@ $(function(){
 			CKEDITOR.instances.content.focus();
 			return false;
 		}
+		
 		if($('#bpwd').val()==''){
-			alert('비밀번호를 입력하세요')
+			alert('비밀번호를 입력하세요');
 			$('#bpwd').focus();
 			return false;
 		}
 		return true;
 	})
-})
+})//$() end-----------------	
+	
 </script>
-
 <%
    String ctx = request.getContextPath();
 %>
 <div align="center" id="bbs" class="col-md-8 offset-md-2 my-4">
-   <h1>Spring Board</h1>
+   <h1>Spring Board [답변 글쓰기]</h1>
    <p>
-      <a href="<%=ctx%>/board/write">WRITE</a> | <a
-         href="<%=ctx%>/board/list">LIST</a>
+      <a href="<%=ctx%>/board/write">글쓰기</a>| <a
+         href="<%=ctx%>/board/list">글목록</a>
       <p>
          <!--파일 업로드시
    method: POST
@@ -49,13 +51,17 @@ $(function(){
     -->   
 
    <form name="bf" id="bf" role="form" action="write" method="POST" enctype="multipart/form-data">
-   <input type="hidden" name="mode" value="write">
-   <!-- 원본글쓰기mode는 write, 답변글쓰기 mode는 rewrite로 감  -->       
+   <input type="hidden" name="mode" value="rewrite">
+   <!-- 원본글쓰기mode는 write, 답변글쓰기 mode는 rewrite로 감  -->
+   <input type="hidden" name="num" value='<c:out value="${num}"/>'>
+   <!-- 부모글의 글번호를 hidden으로 넘긴다---------------------- -->       
     <table class="table">
        <tr>
           <td style="width:20%"><b>제목</b></td>
           <td style="width:80%">
-          <input type="text" name="subject" id="subject" class="form-control">
+          <input type="text" name="subject" id="subject"
+          	value='<c:out value="[RE]${subject}"/>'
+           class="form-control">
           </td>
        </tr>
        <tr>
@@ -87,7 +93,7 @@ $(function(){
       </tr>
       <tr>
          <td colspan="2">
-            <button type="submit" id="btnWrite" class="btn btn-success">글쓰기</button>
+            <button type="submit" id="btnWrite" class="btn btn-success">답변글쓰기</button>
             <button type="reset" id="btnReset" class="btn btn-warning">다시쓰기</button>
          </td>
       </tr>
@@ -99,13 +105,3 @@ $(function(){
 
 </div>
 <c:import url="/foot"/>
-
-
-
-
-
-
-
-
-
-

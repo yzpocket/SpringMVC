@@ -25,4 +25,7 @@ public class BoardVO {
 	private int refer;
 	private int lev;
 	private int sunbun;
+	
+	private String old_filename;//예전에 첨부했던 파일(물리적파일명)
+
 }
