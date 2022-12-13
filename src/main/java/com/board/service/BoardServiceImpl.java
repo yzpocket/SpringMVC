@@ -9,23 +9,25 @@ import org.springframework.stereotype.Service;
 import com.board.mapper.BoardMapper;
 import com.board.model.BoardVO;
 import com.board.model.PagingVO;
+
 @Service("boardServiceImpl")
 public class BoardServiceImpl implements BoardService {
+	
 	@Autowired
 	private BoardMapper boardMapper;
-	
+
 	@Override
 	public int insertBoard(BoardVO board) {
 		return this.boardMapper.insertBoard(board);
 	}
 
 	@Override
-	public List<BoardVO> selectBoardAll(Map<String, Integer> map) {
+	public List<BoardVO> selectBoardAll(Map<String, Integer> map) {		
 		return this.boardMapper.selectBoardAll(map);
 	}
 
 	@Override
-	public List<BoardVO> selectBoardAllPaging(PagingVO paging) {
+	public List<BoardVO> selectBoardAllPaging(PagingVO paging) {		
 		return this.boardMapper.selectBoardAllPaging(paging);
 	}
 
@@ -36,7 +38,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int getTotalCount() {
+	public int getTotalCount() {		
 		return 0;
 	}
 
@@ -47,13 +49,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardVO selectBoardByIdx(Integer num) {
+		
 		return this.boardMapper.selectBoardByIdx(num);
 	}
 
 	@Override
-	public int updateReadnum(Integer num) {
+	public int updateReadnum(Integer num) {		
 		return this.boardMapper.updateReadnum(num);
-//		return (i==null)?0:i.intValue();
 	}
 
 	@Override
@@ -63,7 +65,7 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int deleteBoard(Integer idx) {
+	public int deleteBoard(Integer idx) {		
 		return this.boardMapper.deleteBoard(idx);
 	}
 
@@ -93,12 +95,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public BoardVO selectRefLevSunbun(int idx) {
+	public BoardVO selectRefLevSunbun(int idx) {		
 		return this.boardMapper.selectRefLevSunbun(idx);
 	}
 
 	@Override
-	public int updateSunbun(BoardVO parent) {
+	public int updateSunbun(BoardVO parent) {		
 		return this.boardMapper.updateSunbun(parent);
 	}
 

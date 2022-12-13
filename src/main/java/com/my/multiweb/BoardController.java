@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import javax.inject.Inject;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -44,7 +46,6 @@ public class BoardController {
 		
 		return "board/boardWrite";
 	}
-	
 	@PostMapping("/write")
 	public String boardInsert(Model m,
 			HttpServletRequest req,
@@ -109,6 +110,7 @@ public class BoardController {
 		if("write".equals(board.getMode())) {//글쓰기 모드라면
 			//for(int i=0;i<30;i++)
 			n=this.boardService.insertBoard(board);//글쓰기 처리 메서드 호출
+			
 			str="글쓰기 ";
 			
 		}else if("rewrite".equals(board.getMode())) {//답변 글쓰기 모드라면
@@ -128,32 +130,39 @@ public class BoardController {
 		
 		return util.addMsgLoc(m,str,loc);//msg를 반환
 	}//--------------------------------------
-	
 	@GetMapping("/list")
-	public String baordListPaging(Model m, @ModelAttribute("page") PagingVO page) {
-		log.info("page===="+page);
-		//1. 총게시글 수 가져오기 
+	public String boardListPaging(Model m, @ModelAttribute("page") PagingVO page,
+			HttpServletRequest req, @RequestHeader("User-Agent") String userAgent) {
+		String myctx=req.getContextPath();//컨텍스트명 "/multiweb"
+		
+		HttpSession ses=req.getSession();
+		
+		log.info("1. page==="+page);
+		//1. 총 게시글 수 기져오기 or 검색한 게시글 수 가져오기
 		int totalCount=this.boardService.getTotalCount(page);
 		page.setTotalCount(totalCount);
-		page.setPageSize(5);//한 페이지당 보여줄 목록 갯수 
-		page.setPagingBlock(5);//페이지 블럭 단위 값: 5
-		/////
-		page.init();//페이징 관련 연산을 수행하는 메서드 호출
-		/////
-		log.info("2. page----"+page);
-		
+		//page.setPageSize(5);//한 페이지 당 보여줄 목록 개수 <==파라미터로 받는다
+		page.setPagingBlock(5);//페이징 블럭 단위값: 5
+		////////////////////
+		page.init(ses); //페이징 관련 연산을 수행하는 메서드 호출
+		/////////////////////
+		log.info("2. page==="+page);
+		//2. 게시글 목록 가져오기 or 검색한 게시글 목록 가져오기
 		List<BoardVO> boardArr=this.boardService.selectBoardAllPaging(page);
+		//3. 페이지 네비게이션 문자열 받아오기
+		String loc="board/list";
+		String pageNavi=page.getPageNavi(myctx, loc ,userAgent);
 		
-		
+		m.addAttribute("pageNavi", pageNavi);
 		m.addAttribute("paging",page);
-		m.addAttribute("boardArr",boardArr);
-		return "board/boardList2";
-	}
+		m.addAttribute("boardArr", boardArr);
+		return "board/boardList3";
+	}//--------------------------------------
+	
 	
 	@GetMapping("/list_old")
-	public String boardList(Model m,
-			@RequestParam(defaultValue="1") int cpage) {
-		log.info("cpage===="+cpage); //현재 보여줄 페이지
+	public String boardList(Model m, @RequestParam(defaultValue="1") int cpage) {
+		log.info("1. cpage===="+cpage);//현재 보여줄 페이지
 		if(cpage<=0) {
 			cpage=1;
 		}
@@ -167,13 +176,12 @@ public class BoardController {
 			cpage=pageCount;
 		}
 		log.info("2. cpage===="+cpage);
-		
-		//게시판 목록 가져와서 모델에 저장하기.
-		//[1] where rn between A and B를 사용 할 경우
+		//.게시판 목록 가져와서 모델에 저장하기		
+		//[1] where rn between A and B를 사용할 경우 
 		//int end=cpage*pageSize;
 		//int start=end-(pageSize-1);
 		
-		//[2] where rn > A and rn B 를 사용할 경우
+		//[2] where rn > A and rn <B 를 사용할 경우
 		int start=(cpage-1)*pageSize;
 		int end = start + (pageSize+1);
 		
@@ -181,26 +189,26 @@ public class BoardController {
 		map.put("start", Integer.valueOf(start));
 		map.put("end", Integer.valueOf(end));
 		
-		//게시판 목록 가져와서 모델에 저장하기 "boardArr"
+		//"boardArr"
 		List<BoardVO> boardArr=this.boardService.selectBoardAll(map);
 		m.addAttribute("boardArr", boardArr);
 		m.addAttribute("totalCount", totalCount);
 		m.addAttribute("pageCount", pageCount);
-		m.addAttribute("cpage", cpage);
+		m.addAttribute("cpage",cpage);
 		return "board/boardList";
-	}
-	
+	}//---------------------------
 	
 	@GetMapping("/view/{num}")
-	public String boardView(Model m, @PathVariable("num") int num) {
-		log.info("num====>"+num);
+	public String boardView(Model m,@PathVariable("num") int num) {
+		log.info("num==="+num);
+		//조회수 증가
 		int n=this.boardService.updateReadnum(num);
 		
 		BoardVO board=this.boardService.selectBoardByIdx(num);
-		m.addAttribute("board", board);
+		m.addAttribute("board",board);
 		
 		return "board/boardView";
-	}
+	}//-------------------------------
 	
 	@PostMapping("/delete")
 	public String boardDelete(Model m, 
@@ -242,7 +250,6 @@ public class BoardController {
 		return util.addMsgLoc(m, str, loc);
 	}//-------------------------------
 	
-	
 	@PostMapping("/edit")
 	public String boardEditform(Model m,
 			@RequestParam(defaultValue = "0") int num,
@@ -270,6 +277,7 @@ public class BoardController {
 		return "board/boardEdit";
 		//boardWrite.jsp를 save as해서 만들기
 	}//-------------------------------
+	
 	@PostMapping("/rewrite")
 	public String boardRewrite(Model m, @ModelAttribute BoardVO vo) {
 		log.info("vo==="+vo);
@@ -279,4 +287,15 @@ public class BoardController {
 	}
 
 }//////////////////////////////////
+
+
+
+
+
+
+
+
+
+
+
 

@@ -12,13 +12,13 @@
 	
 	<!-- Application Loggers -->
 	<logger name="com.my.multiweb">
-		<level value="info" />
+		<level value="error" />
 	</logger>
 	<logger name="com.memo.controller">
-		<level value="info" />
+		<level value="error" />
 	</logger>
 	<logger name="com.common.interceptor">
-		<level value= "info"/>
+		<level value= "error"/>
 	</logger>
 	
 	<!-- 3rdparty Loggers -->
